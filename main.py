@@ -42,15 +42,21 @@ async def generate_response(data, sql_query):
 @cl.on_message
 @traceable
 async def postgresql_chat_example(message: cl.Message):
+    # Step 1: User Asks a Question
     question = message.content
+
+    # Step 2: Generate SQL Query
     sql_query = await generate_sql_query(question)
-    sql_query = extract_sql_from_text(sql_query)
+
+    # Step 3: Execute SQL Query
     data = await execute_sql_query(sql_query)
+
+    # Step 4: Return Answer to User
     synthesize_chain = await generate_response(data=data, sql_query=sql_query)
 
     msg = cl.Message(content="")
     output_msg = ""
-
+    # Stream the response to the user (Step 4)
     async for chunk in synthesize_chain.astream(
         {"question": question},
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
