@@ -44,13 +44,19 @@ def extract_sql_from_text(text):
 
 @lru_cache(maxsize=255)
 def get_schema():
+    def remove_sql_comments(sql_string):
+        # Regular expression to match SQL comments
+        comment_pattern = r'/\*.*?\*/|(--[^\r\n]*|/\*(.|\s)*?\*/)'
+        # Remove SQL comments using re.sub
+        return re.sub(comment_pattern, '', sql_string)
+
     """
     Retrieves the database schema information and caches the result.
 
     Returns:
         str: A string containing table information of the database.
     """
-    return _DB_ENGINE.get_table_info()
+    return remove_sql_comments(_DB_ENGINE.get_table_info())
 
 
 def run_query(sql_query):
