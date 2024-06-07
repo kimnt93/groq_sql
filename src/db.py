@@ -64,8 +64,6 @@ def run_query(sql_query):
         list: The results of the SQL query as a list of dictionaries, or an empty list in case of an error.
     """
     try:
-        # Extract SQL code from the input query text
-        sql_query = extract_sql_from_text(sql_query)
         # If no valid SQL code is found, return an empty list
         if sql_query is None or sql_query == "":
             return []

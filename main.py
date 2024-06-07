@@ -17,7 +17,9 @@ async def generate_sql_query(question):
             | sql_gen_model
             | StrOutputParser()
     )
-    return sql_chain.invoke(question)
+    sql_query = sql_chain.invoke(question)
+    sql_query = extract_sql_from_text(sql_query)
+    return sql_query
 
 
 @cl.step
