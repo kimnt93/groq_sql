@@ -6,7 +6,7 @@ SYNTHETIC_TEMPLATE = """**Task**: Create a response using the available Details 
 - Formulate your answer solely based on the information retrieved from the query results.
 - Avoid prefaces such as "based on information", "according to the provided data", etc.
 
-**Detail**:
+**Details**:
 - Question: {question}
 - SQL Query: {sql_query}
 - Data: {data}
